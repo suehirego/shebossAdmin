@@ -1,0 +1,17 @@
+.pastChart{
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px;
+      color: gray;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+      .title{
+            margin-bottom: 20px;
+      }
+
+      .chartGrid{
+            stroke: rgb(229, 229, 229);
+      }
+}
+

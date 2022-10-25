@@ -1,0 +1,269 @@
+import React, { useEffect, useState } from 'react';
+import './singleproduct.scss';
+import Sidebar from '../../components/sidebar/Sidebar';
+import Navbar from '../../components/navbar/Navbar';
+import { useLocation, useParams } from 'react-router-dom';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import axios from 'axios';
+
+
+
+const SingleProduct = () => {
+
+    const location = useLocation();
+    const path = location.pathname.split("/")[2];
+    const [product, setProduct] = useState({});
+
+    const params = useParams();
+
+
+    //GET SINGLE PRODUCT
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const res = await axios.get("/products/find/" + path);
+            setProduct(res.data);
+        };
+        fetchProduct();
+    }, [path]);
+
+
+    //EDIT / UPDATE PRODUCT
+    const [file, setFile] = useState("");
+    const [title, setTitle] = useState("");
+    const [desc, setDesc] = useState("");
+    const [cat, setCat] = useState("");
+    const [price, setPrice] = useState("");
+    const [saleprice, setSalePrice] = useState("");
+    const [brand, setBrand] = useState("");
+
+
+    //PRE FILL UPDATE FORM
+    useEffect(() => {
+        getUserDetails();
+    }, []);
+
+    const getUserDetails = async () => {
+        console.warn(params)
+        let result = await fetch("/products/find/" + params.id);
+        result = await result.json();
+        console.warn(result)
+        setTitle(result.title);
+        setDesc(result.desc);
+        setCat(result.categories);
+        setBrand(result.brand);
+        setPrice(result.price);
+    }
+
+
+    const handleClick = async (e) => {
+        e.preventDefault();
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "upload");
+        try {
+            const uploadRes = await axios.post(
+                "https://api.cloudinary.com/v1_1/tunjooadmin/image/upload",
+                data
+            );
+
+            const { url } = uploadRes.data;
+
+            const updatedUser = {
+                img: url,
+            };
+
+            await axios.put("/products/" + product._id, updatedUser);
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const updatedUser = {
+                title: title,
+                desc: desc,
+                categories: cat,
+                brand: brand,
+                price: price,
+            };
+
+            await axios.put("/products/" + product._id, updatedUser);
+            window.location.reload();
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
+
+
+    return (
+        <div className='single'>
+            <Sidebar />
+            <div className="singleContainer">
+
+                <Navbar />
+
+                <div className="top">
+                    <div className="productLeft">
+                        <h2 className="title">Product Details</h2>
+                        <div className="item">
+                            <img
+                                src={product.img || "https://i.ibb.co/MBtjqXQ/no-avatar.gif"}
+                                alt=""
+                                className="itemImg"
+                            />
+                            <div className="itemDetails">
+                                <h3 className="detailsTitle">{product.title}</h3>
+                                <div className="detailsItem">
+                                    <span className="itemKey">Id:</span>
+                                    <span className="itemValue">SB-P000{product.id}</span>
+                                </div>
+
+                                <div className="detailsItem">
+                                    <span className="itemKey">Description:</span>
+                                    <span className="itemValue">{product.desc}</span>
+                                </div>
+
+                                <div className="detailsItem2">
+                                    <span className="itemKey">Categories:</span>
+                                    <span className="itemValue">{product.categories + " "}</span>
+                                </div>
+
+                                <div className="detailsItem2">
+                                    <span className="itemKey">Size:</span>
+                                    <span className="itemValue">{product.size}</span>
+                                </div>
+
+                                <div className="detailsItem2">
+                                    <span className="itemKey">Brand:</span>
+                                    <span className="itemValue">{product.brand}</span>
+                                </div>
+
+                                <div className="detailsItem2">
+                                    <span className="itemKey">Price:</span>
+                                    <span className="itemValue">{product.price?.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}ugx</span>
+                                </div>
+
+                                <div className="detailsItem2">
+                                    <span className="itemKey">Sale Price:</span>
+                                    <span className="itemValue">{product.newPrice?.toLocaleString(navigator.language, { minimumFractionDigits: 0 })}ugx</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <form>
+
+                            <div className="itemForm">
+
+                                <div className="imgInput">
+
+                                    <label htmlFor="file">
+                                        Edit Product Image: <DriveFolderUploadIcon className='icon' />
+                                    </label>
+
+                                    <input
+                                        type="file" id="file"
+                                        style={{ display: 'none' }}
+                                        onChange={(e) => setFile(e.target.files[0])}
+                                    />
+
+                                </div>
+
+                                <div className="rightImg">
+                                    <img
+                                        src={
+                                            file
+                                                ? URL.createObjectURL(file)
+                                                : "https://media.istockphoto.com/vectors/default-image-icon-vector-missing-picture-page-for-website-design-or-vector-id1357365823?k=20&m=1357365823&s=612x612&w=0&h=ZH0MQpeUoSHM3G2AWzc8KkGYRg4uP_kuu0Za8GFxdFc="
+                                        }
+                                        alt=""
+                                    />
+
+                                </div>
+
+                                <button onClick={handleClick} className="itemButton">Update</button>
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                    <div className="productRight">
+                        <h2 className="title">Edit Product Info</h2>
+
+                        <form onSubmit={handleSubmit}>
+                            <div className='editForm'>
+
+                                <div className="formInput">
+                                    <label>Title</label>
+                                    <input
+                                        type="text"
+                                        value={title}
+                                        onChange={(e) => setTitle(e.target.value) }
+                                    />
+                                </div>
+                                <div className="formInput">
+                                    <label>Description</label>
+                                    <input
+                                        type="text"
+                                        value={desc}
+                                        onChange={(e) => setDesc(e.target.value)}
+                                    />
+                                </div>
+                                <div className="formInput">
+                                    <label>Category</label>
+                                    <input
+                                        type="text"
+                                        value={cat}
+                                        onChange={(e) => setCat(e.target.value)}
+                                    />
+                                </div>
+                                <div className="formInput">
+                                    <label>Brand</label>
+                                    <input
+                                        type="text"
+                                        value={brand}
+                                        onChange={(e) => setBrand(e.target.value)}
+                                    />
+                                </div>
+                                <div className="formInput">
+                                    <label>Price</label>
+                                    <input
+                                        type="text"
+                                        value={price}
+                                        onChange={(e) => setPrice(e.target.value)}
+                                    />
+                                </div>
+                                <div className="formInput">
+                                    <label>Sale Price</label>
+                                    <input
+                                        type="text"
+                                        value={saleprice}
+                                        placeholder="0.00"
+                                        onChange={(e) => setSalePrice(e.target.value)}
+                                    />
+                                </div>
+
+                                <button type='submit' className="formButton">Update</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+export default SingleProduct
