@@ -8,7 +8,7 @@ const WidgetPrevious = () => {
 
       //total users
       const [income, setIncome] = useState([]);
-      const [perc, setPerc] = useState(0);
+      // const [perc, setPerc] = useState(0);
 
       useEffect(() => {
             const getIncome = async () => {
@@ -16,7 +16,7 @@ const WidgetPrevious = () => {
                         const res = await axios.get("/orders/income/prev");
                         setIncome(res.data);
                         //to get the percentage; (Total of current month - previous month) divide by (previous month * 100)
-                        setPerc(((res.data[1].total - res.data[0].total) / res.data[0].total)*100);
+                        // setPerc(((res.data[1].total - res.data[0].total) / res.data[0].total)*100);
                   } catch { }
             };
             getIncome();

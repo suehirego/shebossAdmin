@@ -3,7 +3,8 @@
     border-right: 0.3px solid lightgray;
     min-height: 100vh;
     background-color: white;
-    background-color: rgba(0, 128, 0, 0.318);
+    background-color: #5bd1d7;
+    
     display: flex;
     justify-content: center;
     position: relative;
@@ -26,7 +27,7 @@
 
         hr {
             height: 0;
-            border: 0.3px solid lightgray;
+            border: 0.3px solid gray;
         }
 
         .center {

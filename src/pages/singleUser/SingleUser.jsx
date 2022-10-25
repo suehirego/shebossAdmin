@@ -38,7 +38,7 @@ const SingleUser = () => {
     //PRE FILL UPDATE FORM
     useEffect(() => {
         getUserDetails();
-    }, []);
+    }, );
 
     const getUserDetails = async () => {
         console.warn(params)
