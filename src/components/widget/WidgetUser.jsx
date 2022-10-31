@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './widget.scss';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance } from '../../config';
 
 
 const WidgetUser = () => {
@@ -11,7 +12,7 @@ const WidgetUser = () => {
       useEffect(() => {
             const getCount = async () => {
                   try {
-                        const res = await axios.get("/users/usercount");
+                        const res = await axiosInstance.get("/users/usercount");
                         setUserCount(res.data);
                   } catch { }
             };

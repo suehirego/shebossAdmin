@@ -4,7 +4,8 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance } from '../../config';
 
 
 
@@ -24,7 +25,7 @@ const NewUser = ({ inputs, title }) => {
         data.append("file", file);
         data.append("upload_preset", "upload");
         try {
-            const uploadRes = await axios.post(
+            const uploadRes = await axiosInstance.post(
                 "https://api.cloudinary.com/v1_1/tunjooadmin/image/upload",
                 data
             );
@@ -36,7 +37,7 @@ const NewUser = ({ inputs, title }) => {
                 img: url,
             };
 
-            await axios.post("/auth/register", newUser);
+            await axiosInstance.post("/auth/register", newUser);
         } catch (err) {
             console.log(err);
         }

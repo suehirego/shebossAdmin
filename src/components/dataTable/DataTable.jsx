@@ -3,7 +3,8 @@ import './datatable.scss';
 import { DataGrid } from '@mui/x-data-grid';
 import { Link, useLocation } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance } from '../../config';
 
 
 const DataTable = ({columns}) => {
@@ -21,7 +22,7 @@ const DataTable = ({columns}) => {
 
       const handleDelete = async (id) => {
             try {
-              await axios.delete(`/${path}/${id}`);
+              await axiosInstance.delete(`/${path}/${id}`);
               setList(list.filter((item) => item._id !== id));
             } catch (err) {}
       };
