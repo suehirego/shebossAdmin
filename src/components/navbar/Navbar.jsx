@@ -41,7 +41,7 @@ const Navbar = () => {
                                           alt=""
                                           className='avatar'
                                     />
-                                    <span style={{color: 'rgba(106,13,173, 0.8)', marginLeft: 10}}>Hi {user.firstname}</span>
+                                    <span>Hi {user.firstname}</span>
                               </div>
 
                         </div>

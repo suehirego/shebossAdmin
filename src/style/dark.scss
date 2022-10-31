@@ -9,6 +9,10 @@
             .search {
                   border-color: #495670;
             }
+
+            span{
+                  color: #64ffda;  
+            }
       }
 
       .pastCahrt {
@@ -110,6 +114,14 @@
                         &:hover {
                               background-color: rgba(100, 255, 218, 0.1);
                         }
+                  }
+
+                  .icon {
+                        color: #5bd1d7;
+                  }
+    
+                  span {
+                        color: #5bd1d7;
                   }
             }
       }
