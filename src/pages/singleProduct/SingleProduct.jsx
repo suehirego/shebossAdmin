@@ -4,8 +4,8 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { useLocation, useParams } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
-// import axios from 'axios';
-import { axiosInstance } from '../../config';
+import axios from 'axios';
+
 
 
 
@@ -21,7 +21,7 @@ const SingleProduct = () => {
     //GET SINGLE PRODUCT
     useEffect(() => {
         const fetchProduct = async () => {
-            const res = await axiosInstance.get("/products/find/" + path);
+            const res = await axios.get("/products/find/" + path);
             setProduct(res.data);
         };
         fetchProduct();
@@ -62,7 +62,7 @@ const SingleProduct = () => {
         data.append("file", file);
         data.append("upload_preset", "upload");
         try {
-            const uploadRes = await axiosInstance.post(
+            const uploadRes = await axios.post(
                 "https://api.cloudinary.com/v1_1/tunjooadmin/image/upload",
                 data
             );
@@ -73,7 +73,7 @@ const SingleProduct = () => {
                 img: url,
             };
 
-            await axiosInstance.put("/products/" + product._id, updatedUser);
+            await axios.put("/products/" + product._id, updatedUser);
             window.location.reload();
         } catch (err) {
             console.log(err);
@@ -92,7 +92,7 @@ const SingleProduct = () => {
                 price: price,
             };
 
-            await axiosInstance.put("/products/" + product._id, updatedUser);
+            await axios.put("/products/" + product._id, updatedUser);
             window.location.reload();
         } catch (err) {
             console.log(err);
