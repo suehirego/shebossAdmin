@@ -7,8 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-// import axios from 'axios';
-import { axiosInstance } from '../../config';
+import axios from 'axios';
 import moment from 'moment';
 
 const TableComponent = () => {
@@ -18,7 +17,7 @@ const TableComponent = () => {
       useEffect(() => {
             const getOrders = async () => {
                   try{
-                        const res = await axiosInstance.get("/orders");
+                        const res = await axios.get("/orders");
                         setOrders(res.data);
                   } catch {}
             };

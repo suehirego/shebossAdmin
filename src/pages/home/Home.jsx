@@ -8,8 +8,8 @@ import PastChart from '../../components/pastchart/PastChart';
 import Table from '../../components/table/TableComponent';
 import WidgetStock from '../../components/widget/WidgetStock';
 import WidgetPrevious from '../../components/widget/WidgetPrevious';
-// import axios from 'axios';
-import { axiosInstance } from '../../config';
+import axios from 'axios';
+
 
 
 
@@ -38,7 +38,7 @@ const Home = () => {
      useEffect(() => {
           const getStats = async () => {
                try {
-                    const res = await axiosInstance.get("/users/stats");
+                    const res = await axios.get("/users/stats");
                     const statsList = res.data.sort(function (a, b) {
                          return a._id - b._id;
                     });
