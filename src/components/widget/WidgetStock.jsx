@@ -12,7 +12,7 @@ const WidgetStock = () => {
       useEffect(() => {
             const getCount = async () => {
                   try {
-                        const res = await axios.get("/products/productcount");
+                        const res = await axios.get("https://shebossapi.herokuapp.com/api/products/productcount");
                         setProductCount(res.data);
                   } catch { }
             };

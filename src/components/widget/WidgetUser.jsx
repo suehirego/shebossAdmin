@@ -12,7 +12,7 @@ const WidgetUser = () => {
       useEffect(() => {
             const getCount = async () => {
                   try {
-                        const res = await axios.get("/users/usercount");
+                        const res = await axios.get("https://shebossapi.herokuapp.com/api/users/usercount");
                         setUserCount(res.data);
                   } catch { }
             };
