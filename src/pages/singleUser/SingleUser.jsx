@@ -3,7 +3,7 @@ import './singleuser.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -13,8 +13,6 @@ const SingleUser = () => {
     const location = useLocation();
     const path = location.pathname.split("/")[2];
     const [user, setUser] = useState({});
-
-    const params = useParams();
 
     //GET SINGLE USER
     useEffect(() => {
@@ -33,24 +31,6 @@ const SingleUser = () => {
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
-
-
-    //PRE FILL UPDATE FORM
-    useEffect(() => {
-        getUserDetails();
-    }, );
-
-    const getUserDetails = async () => {
-        console.warn(params)
-        let result = await fetch("/users/find/" + params.id);
-        result = await result.json();
-        console.warn(result)
-        setUsername(result.username);
-        setFirstname(result.firstname);
-        setLastname(result.lastname);
-        setEmail(result.email);
-        setAddress(result.address);
-    }
 
 
     const handleClick = async (e) => {
@@ -184,6 +164,7 @@ const SingleUser = () => {
                                     <input
                                         type="text"
                                         value={username}
+                                        placeholder={user.username}
                                         onChange={(e) => { setUsername(e.target.value) }}
                                     />
                                 </div>
@@ -192,6 +173,7 @@ const SingleUser = () => {
                                     <input
                                         type="text"
                                         value={firstname}
+                                        placeholder={user.firstname}
                                         onChange={(e) => setFirstname(e.target.value)}
                                     />
                                 </div>
@@ -200,6 +182,7 @@ const SingleUser = () => {
                                     <input
                                         type="text"
                                         value={lastname}
+                                        placeholder={user.lastname}
                                         onChange={(e) => setLastname(e.target.value)}
                                     />
                                 </div>
@@ -208,6 +191,7 @@ const SingleUser = () => {
                                     <input
                                         type="text"
                                         value={email}
+                                        placeholder={user.email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
@@ -216,6 +200,7 @@ const SingleUser = () => {
                                     <input
                                         type="text"
                                         value={address}
+                                        placeholder={user.address}
                                         onChange={(e) => setAddress(e.target.value)}
                                     />
                                 </div>

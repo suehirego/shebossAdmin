@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './singleproduct.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import axios from 'axios';
 
@@ -15,7 +15,7 @@ const SingleProduct = () => {
     const path = location.pathname.split("/")[2];
     const [product, setProduct] = useState({});
 
-    const params = useParams();
+    // const params = useParams();
 
 
     //GET SINGLE PRODUCT
@@ -32,28 +32,10 @@ const SingleProduct = () => {
     const [file, setFile] = useState("");
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
-    const [cat, setCat] = useState("");
+    const [categories, setCategories] = useState("");
     const [price, setPrice] = useState("");
-    const [saleprice, setSalePrice] = useState("");
+    const [newPrice, setNewPrice] = useState("");
     const [brand, setBrand] = useState("");
-
-
-    //PRE FILL UPDATE FORM
-    useEffect(() => {
-        getUserDetails();
-    }, );
-
-    const getUserDetails = async () => {
-        console.warn(params)
-        let result = await fetch("/products/find/" + params.id);
-        result = await result.json();
-        console.warn(result)
-        setTitle(result.title);
-        setDesc(result.desc);
-        setCat(result.categories);
-        setBrand(result.brand);
-        setPrice(result.price);
-    }
 
 
     const handleClick = async (e) => {
@@ -84,15 +66,16 @@ const SingleProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const updatedUser = {
+            const updatedProduct = {
                 title: title,
                 desc: desc,
-                categories: cat,
+                categories: categories,
                 brand: brand,
                 price: price,
+                newPrice: newPrice,
             };
 
-            await axios.put("/products/" + product._id, updatedUser);
+            await axios.put("/products/" + product._id, updatedProduct);
             window.location.reload();
         } catch (err) {
             console.log(err);
@@ -208,6 +191,7 @@ const SingleProduct = () => {
                                     <input
                                         type="text"
                                         value={title}
+                                        placeholder={product.title}
                                         onChange={(e) => setTitle(e.target.value) }
                                     />
                                 </div>
@@ -216,6 +200,7 @@ const SingleProduct = () => {
                                     <input
                                         type="text"
                                         value={desc}
+                                        placeholder={product.desc}
                                         onChange={(e) => setDesc(e.target.value)}
                                     />
                                 </div>
@@ -223,8 +208,9 @@ const SingleProduct = () => {
                                     <label>Category</label>
                                     <input
                                         type="text"
-                                        value={cat}
-                                        onChange={(e) => setCat(e.target.value)}
+                                        value={categories}
+                                        placeholder={product.categories}
+                                        onChange={(e) => setCategories(e.target.value)}
                                     />
                                 </div>
                                 <div className="formInput">
@@ -232,6 +218,7 @@ const SingleProduct = () => {
                                     <input
                                         type="text"
                                         value={brand}
+                                        placeholder={product.brand}
                                         onChange={(e) => setBrand(e.target.value)}
                                     />
                                 </div>
@@ -240,6 +227,7 @@ const SingleProduct = () => {
                                     <input
                                         type="text"
                                         value={price}
+                                        placeholder={product.price}
                                         onChange={(e) => setPrice(e.target.value)}
                                     />
                                 </div>
@@ -247,9 +235,9 @@ const SingleProduct = () => {
                                     <label>Sale Price</label>
                                     <input
                                         type="text"
-                                        value={saleprice}
+                                        value={newPrice}
                                         placeholder="0.00"
-                                        onChange={(e) => setSalePrice(e.target.value)}
+                                        onChange={(e) => setNewPrice(e.target.value)}
                                     />
                                 </div>
 

@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-// import axios from "axios";
-import { axiosInstance } from "../../config";
+import axios from "axios";
+// import { axiosInstance } from "../../config";
 
 
 
@@ -25,7 +25,7 @@ const Login = () => {
             e.preventDefault();
             dispatch({ type: "LOGIN_START" });
             try {
-                  const res = await axiosInstance.post("/auth/login", credentials);
+                  const res = await axios.post("/auth/login", credentials);
                   if (res.data.isAdmin) {
                         dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
                         navigate("/");
@@ -59,6 +59,7 @@ const Login = () => {
                               fontSize: '50px',
                               fontWeight: "bold",
                               marginBottom: "30px",
+                              letterSpacing: "-3px",
                               color: "#282828",
                         }}>
                         sheboss

@@ -1,5 +1,7 @@
-import axios from 'axios'
+// import axios from 'axios'
 
-export const axiosInstance = axios.create({
-      baseURL: "https://shebossapi.herokuapp.com/api/"
-});
+// export const axiosInstance = axios.create({
+//       baseURL: "https://shebossapi.herokuapp.com/api/"
+// });
+
+
