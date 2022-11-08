@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './widget.scss';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance } from '../../config';
+
 
 
 
@@ -12,7 +14,7 @@ const WidgetStock = () => {
       useEffect(() => {
             const getCount = async () => {
                   try {
-                        const res = await axios.get("/products/productcount");
+                        const res = await axiosInstance.get("/products/productcount");
                         setProductCount(res.data);
                   } catch { }
             };
