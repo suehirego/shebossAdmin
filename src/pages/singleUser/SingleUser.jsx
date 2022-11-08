@@ -4,7 +4,8 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance } from '../../config';
 
 
 
@@ -17,7 +18,7 @@ const SingleUser = () => {
     //GET SINGLE USER
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get("/users/find/" + path);
+            const res = await axiosInstance.get("/users/find/" + path);
             setUser(res.data);
         };
         fetchUser();
@@ -39,7 +40,7 @@ const SingleUser = () => {
         data.append("file", file);
         data.append("upload_preset", "upload");
         try {
-            const uploadRes = await axios.post(
+            const uploadRes = await axiosInstance.post(
                 "https://api.cloudinary.com/v1_1/tunjooadmin/image/upload",
                 data
             );
@@ -50,7 +51,7 @@ const SingleUser = () => {
                 img: url,
             };
 
-            await axios.put("/users/" + user._id, updatedUser);
+            await axiosInstance.put("/users/" + user._id, updatedUser);
             window.location.reload();
         } catch (err) {
             console.log(err);
@@ -69,7 +70,7 @@ const SingleUser = () => {
                 address: address,
             };
 
-            await axios.put("/users/" + user._id, updatedUser);
+            await axiosInstance.put("/users/" + user._id, updatedUser);
             window.location.reload();
         } catch (err) {
             console.log(err);

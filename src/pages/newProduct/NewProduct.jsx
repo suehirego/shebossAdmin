@@ -6,7 +6,8 @@ import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import { useState } from 'react';
 import { productInputs } from '../../formData';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import { axiosInstance } from '../../config';
 
 
 
@@ -39,7 +40,7 @@ const NewProduct = () => {
         data.append("file", file);
         data.append("upload_preset", "upload");
         try {
-            const uploadRes = await axios.post(
+            const uploadRes = await axiosInstance.post(
                 "https://api.cloudinary.com/v1_1/tunjooadmin/image/upload",
                 data
             );
@@ -53,7 +54,7 @@ const NewProduct = () => {
                 img: url,
             };
 
-            await axios.post("products", newproduct);
+            await axiosInstance.post("products", newproduct);
             // history.pushState("")
             navigate("/products");
         } catch (err) {
