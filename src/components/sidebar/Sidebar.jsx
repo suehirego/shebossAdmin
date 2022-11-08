@@ -94,7 +94,7 @@ const Sdebar = () => {
                             <AccountCircleOutlinedIcon className='icon' />
                             <span>Profile</span>
                         </li>
-                        <li onClick={handleLogout} style={{ marginTop: 180 }}>
+                        <li onClick={handleLogout} style={{ marginTop: 40 }}>
                             <ExitToAppOutlinedIcon className='icon' style={{ color: 'red' }} />
                             <span style={{ color: 'red' }}>{user && "LOGOUT"}</span>
                         </li>
