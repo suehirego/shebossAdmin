@@ -3,8 +3,8 @@ import './singleorder.scss';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 import { useLocation } from 'react-router-dom';
-// import axios from 'axios';
-import { axiosInstance } from '../../config';
+import axios from 'axios';
+// import { axiosInstance } from '../../config';
 
 
 
@@ -19,7 +19,7 @@ const SingleUser = () => {
     //GET SINGLE order
     useEffect(() => {
         const fetchOrder = async () => {
-            const res = await axiosInstance.get("/orders/find/" + path);
+            const res = await axios.get("/orders/find/" + path);
             setOrder(res.data);
         };
         fetchOrder();
